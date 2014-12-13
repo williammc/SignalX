@@ -8,7 +8,7 @@
 
 namespace sigx {
 
-using SlotKey = std::array < std::uintptr_t, 2 > ;
+using SlotKey = std::array < std::uintptr_t, 2> ;
 
 /// Thread-safe observer
 class Observer {

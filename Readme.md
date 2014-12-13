@@ -14,11 +14,11 @@ sigx::Signal<bool(const char*, std::size_t)> signal2;
 ## Connect
 ```
 // Connect member functions to sigx::signals;
-signal1.connect<Foo, &Foo::handler_a>(&foo);
-signal2.connect<Foo, &Foo::handler_b>(&foo);
+signal1.connect<Sample, &Sample::handler_a>(&sample);
+signal2.connect<Sample, &Sample::handler_b>(&sample);
 
 // Connect a static member function
-signal1.connect<Foo::handler_c>();
+signal1.connect<Sample::handler_c>();
 
 // Connect a free function
 signal2.connect<handler_d>();
@@ -44,11 +44,11 @@ signal1("signal 1 emit again", [&](bool srv)
 _Additionally test convenience overloads for references._
 
 // Disconnect member functions from sigx::Signals
-signal1.disconnect<Foo, &Foo::handler_a>(foo);
-signal2.disconnect<Foo, &Foo::handler_b>(foo);
+signal1.disconnect<Sample, &Sample::handler_a>(sample);
+signal2.disconnect<Sample, &Sample::handler_b>(sample);
 
 // Disconnect a static member function
-signal1.disconnect<Foo::handler_c>();
+signal1.disconnect<Sample::handler_c>();
 
 // Disconnect a free function
 signal2.disconnect<handler_d>();
@@ -59,7 +59,7 @@ signal2.disconnect<handler_d>();
 _To utilize automatic connection management you must inherit from sigx::Observer_
 
 ```
-struct Foo : public sigx::Observer {
+struct Sample : public sigx::Observer {
   bool handler_a(const char* e) const { 
     std::cout << e << std::endl;
     return true;

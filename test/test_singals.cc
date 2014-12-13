@@ -21,7 +21,7 @@ struct Sample /*: public sigx::Observer*/ {
   }
 };
 
-bool slot4(const char* e, std::size_t n) {
+bool slot5(const char* e, std::size_t n) {
   std::cout << e << " [on line: " << n << "]" << std::endl;
   return false;
 }
@@ -32,6 +32,7 @@ int main() {
   // Declare sigx::Signals using function signature syntax
   sigx::Signal<bool(const char*)> signal1;
   sigx::Signal<bool(const char*, std::size_t)> signal2;
+  sigx::Signal<bool(const char*, std::size_t, int)> signal3;
 
   // Connect member functions to sigx::Signals
   signal1.connect<Sample, &Sample::slot1>(&sample);
@@ -41,7 +42,7 @@ int main() {
   signal1.connect<Sample::slot3>();
 
   // Connect a free function
-  signal2.connect<slot4>();
+  signal2.connect<slot5>();
 
   // Emit Signals
   signal1("signal 1");
@@ -62,7 +63,7 @@ int main() {
   signal1.disconnect<Sample::slot3>();
 
   // Disconnect a free function
-  signal2.disconnect<slot4>();
+  signal2.disconnect<slot5>();
 
   // Emit again to test disconnects
   signal1("THIS SHOULD NOT APPEAR");
