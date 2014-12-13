@@ -15,51 +15,51 @@ class Function<T_rv(Args...)> {
 
   using FuncType = T_rv(*)(void*, Args...);
 
-  void* this_ptr_; // instance pointer
-  FuncType stub_ptr_; // free function pointer
+  void* obj_ptr_; // instance obj
+  FuncType func_ptr_; // free function obj
 
   template <typename T, typename F>
-  Function(T&& this_ptr, F&& stub_ptr) :
-    this_ptr_{ std::forward<T>(this_ptr) },
-    stub_ptr_{ std::forward<F>(stub_ptr) } {}
+  Function(T&& obj_ptr, F&& func_ptr) :
+    obj_ptr_{ std::forward<T>(obj_ptr) },
+    func_ptr_{ std::forward<F>(func_ptr) } {}
 
-  /*Function (void* this_ptr, FuncType stub_ptr):
-  this_ptr_ { this_ptr }, stub_ptr_ { stub_ptr } {}*/
+  /*Function (void* obj_ptr, FuncType func_ptr):
+  obj_ptr_ { obj_ptr }, func_ptr_ { func_ptr } {}*/
 
   Function(SlotKey const& _k) :
-    this_ptr_{ reinterpret_cast<void*>(std::get<0>(_k)) },
-    stub_ptr_{ reinterpret_cast<FuncType>(std::get<1>(_k)) } {}
+    obj_ptr_{ reinterpret_cast<void*>(std::get<0>(_k)) },
+    func_ptr_{ reinterpret_cast<FuncType>(std::get<1>(_k)) } {}
 
 public:
 
-  template <T_rv(*fun_ptr)(Args...)>
+  template <T_rv(*func_ptr)(Args...)>
   static inline Function bind() {
     return{ nullptr, [](void* /*NULL*/, Args... args) {
-      return (*fun_ptr)(std::forward<Args>(args)...); } };
+      return (*func_ptr)(std::forward<Args>(args)...); } };
   }
 
   template <typename T, T_rv(T::*mem_ptr)(Args...)>
-  static inline Function bind(T* pointer) {
-    return{ pointer, [](void* this_ptr, Args... args) {
-      return (static_cast<T*>(this_ptr)->*mem_ptr)
+  static inline Function bind(T* obj) {
+    return{ obj, [](void* obj_ptr, Args... args) {
+      return (static_cast<T*>(obj_ptr)->*mem_ptr)
         (std::forward<Args>(args)...); } };
   }
 
   template <typename T, T_rv(T::*mem_ptr)(Args...) const>
-  static inline Function bind(T* pointer) {
-    return{ pointer, [](void* this_ptr, Args... args) {
-      return (static_cast<T*>(this_ptr)->*mem_ptr)
+  static inline Function bind(T* obj) {
+    return{ obj, [](void* obj_ptr, Args... args) {
+      return (static_cast<T*>(obj_ptr)->*mem_ptr)
         (std::forward<Args>(args)...); } };
   }
 
   inline T_rv operator() (Args... args) {
-    return (*stub_ptr_)(this_ptr_, std::forward<Args>(args)...);
+    return (*func_ptr_)(obj_ptr_, std::forward<Args>(args)...);
   }
 
   inline operator SlotKey() const {
     return{
-      reinterpret_cast<std::uintptr_t>(this_ptr_),
-      reinterpret_cast<std::uintptr_t>(stub_ptr_)
+      reinterpret_cast<std::uintptr_t>(obj_ptr_),
+      reinterpret_cast<std::uintptr_t>(func_ptr_)
     };
   }
 };
@@ -94,9 +94,9 @@ class Signal<T_rv(Args...)> : private Observer {
 public:
   using Delegate = Function<T_rv(Args...)>;
   // CONNECT ------------------------------------------------------------------
-  template <T_rv(*fun_ptr)(Args...)>
+  template <T_rv(*func_ptr)(Args...)>
   void connect() {
-    Observer::insert(Delegate::template bind<fun_ptr>());
+    Observer::insert(Delegate::template bind<func_ptr>());
   }
 
   template <typename T, T_rv(T::*mem_ptr)(Args...)>
@@ -122,9 +122,9 @@ public:
   }
 
   // DISCONNECT ---------------------------------------------------------------
-  template <T_rv(*fun_ptr)(Args...)>
+  template <T_rv(*func_ptr)(Args...)>
   void disconnect() {
-    Observer::remove(Delegate::template bind<fun_ptr>());
+    Observer::remove(Delegate::template bind<func_ptr>());
   }
 
   template <typename T, T_rv(T::*mem_ptr)(Args...)>
