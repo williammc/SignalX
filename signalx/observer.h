@@ -34,7 +34,6 @@ class Observer {
 protected:
 
   ~Observer() {
-    std::lock_guard<std::mutex> lock(sync_);
     for (auto& tpair : tracked_connections_)
       tpair.second->remove(tpair.first);
   }
