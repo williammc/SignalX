@@ -68,7 +68,7 @@ public:
 template <typename T_rv> class Signal;
 
 template <typename T_rv, typename... Args>
-class Signal<T_rv(Args...)> : private Observer {
+class Signal<T_rv(Args...)> : public Observer {
   template <typename T>
   void insert_sfinae(const SlotKey& key, typename T::Observer* obj) {
     Observer::insert(key, obj);
