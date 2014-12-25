@@ -15,7 +15,8 @@ class Observer {
   template <typename T> friend class Signal;
  public:
   ~Observer() {
-    for (auto& tpair : tracked_connections_)
+    auto conn = tracked_connections_;
+    for (auto& tpair : conn)
       tpair.second->remove(tpair.first);
   }
 
