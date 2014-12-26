@@ -152,13 +152,15 @@ public:
   // EMIT ---------------------------------------------------------------------
   void operator() (Args... args) {
     for (auto const& slot : tracked_connections_) {
-      Delegate(std::get<0>(slot))(std::forward<Args>(args)...);
+      //Delegate(std::get<0>(slot))(std::forward<Args>(args)...);  // this cause move for smart_ptr => args become emptry in the 2+ iterations
+      Delegate(std::get<0>(slot))(args...);
     }
   }
   template <typename Accumulator>
   void operator() (Args... args, Accumulator sink) {
     for (auto const& slot : tracked_connections_) {
-      sink(Delegate(std::get<0>(slot))(std::forward<Args>(args)...));
+      //sink(Delegate(std::get<0>(slot))(std::forward<Args>(args)...));
+      sink(Delegate(std::get<0>(slot))(args...));
     }
   }
 };

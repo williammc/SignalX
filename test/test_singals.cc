@@ -1,7 +1,12 @@
 #include "signalx/signalx.h"
-
+#include <memory>
 #include <iostream>
 #include <vector>
+
+struct Foo {
+  Foo() { a = 1; }
+  int a;
+};
 
 /// deriving Observer for automatic disconnection management
 struct Sample /*: public sigx::Observer*/ {
@@ -19,7 +24,15 @@ struct Sample /*: public sigx::Observer*/ {
     std::cout << e << std::endl;
     return true;
   }
+
+  static void slot4_1(std::shared_ptr<Foo> f) {
+    printf("Foo:%d\n", f->a);
+  }
 };
+
+void slot4_2(std::shared_ptr<Foo> f) {
+  printf("Foo:%d\n", f->a);
+}
 
 bool slot5(const char* e, std::size_t n) {
   std::cout << e << " [on line: " << n << "]" << std::endl;
@@ -33,6 +46,7 @@ int main() {
   sigx::Signal<bool(const char*)> signal1;
   sigx::Signal<bool(const char*, std::size_t)> signal2;
   sigx::Signal<bool(const char*, std::size_t, int)> signal3;
+  sigx::Signal<void(std::shared_ptr<Foo>)> signal4;
 
   // Connect member functions to sigx::Signals
   signal1.connect<Sample, &Sample::slot1>(&sample);
@@ -44,9 +58,14 @@ int main() {
   // Connect a free function
   signal2.connect<slot5>();
 
+  signal4.connect<slot4_2>();
+  signal4.connect<Sample::slot4_1>();
+
   // Emit Signals
   signal1("signal 1");
   signal2("signal 2", __LINE__);
+  auto f = std::make_shared<Foo>();
+  signal4(f);
 
   std::vector<bool> status;
 
@@ -65,9 +84,14 @@ int main() {
   // Disconnect a free function
   signal2.disconnect<slot5>();
 
+  signal4.disconnect<slot4_2>();
+  signal4.disconnect<Sample::slot4_1>();
+
   // Emit again to test disconnects
   signal1("THIS SHOULD NOT APPEAR");
   signal2("THIS SHOULD NOT APPEAR", __LINE__);
+
+  signal4(f);
 
   // Pause the screen
   std::cin.get();
