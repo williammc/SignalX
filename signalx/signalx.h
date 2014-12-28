@@ -149,17 +149,19 @@ public:
     disconnect<T, mem_ptr>(std::addressof(instance));
   }
 
+  void disconnect_all() {
+    remove_all();
+  }
+
   // EMIT ---------------------------------------------------------------------
   void operator() (Args... args) {
-    for (auto const& slot : tracked_connections_) {
-      //Delegate(std::get<0>(slot))(std::forward<Args>(args)...);  // this cause move for smart_ptr => args become emptry in the 2+ iterations
+    for (const auto& slot : tracked_connections_) {
       Delegate(std::get<0>(slot))(args...);
     }
   }
   template <typename Accumulator>
   void operator() (Args... args, Accumulator sink) {
-    for (auto const& slot : tracked_connections_) {
-      //sink(Delegate(std::get<0>(slot))(std::forward<Args>(args)...));
+    for (const auto& slot : tracked_connections_) {
       sink(Delegate(std::get<0>(slot))(args...));
     }
   }

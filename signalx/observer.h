@@ -8,7 +8,7 @@
 
 namespace sigx {
 
-using SlotKey = std::array < std::uintptr_t, 2> ;
+using SlotKey = std::array < std::uintptr_t, 2 > ;
 
 /// Thread-safe observer
 class Observer {
@@ -33,6 +33,11 @@ class Observer {
   void remove(SlotKey const& key) {
     std::lock_guard<std::mutex> lock(sync_);
     tracked_connections_.erase(key);
+  }
+
+  void remove_all() {
+    std::lock_guard<std::mutex> lock(sync_);
+    tracked_connections_.clear();
   }
 
  protected:
