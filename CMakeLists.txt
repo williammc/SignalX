@@ -18,9 +18,9 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKER_ROOT}/cmake
                               ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules
                               ${CMAKE_CURRENT_BINARY_DIR})
 
-set(SignalX_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(SIGNALX_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 if(NOT THE_PROJECT_ROOT OR THE_PROJECT_ROOT STREQUAL "")
-  set(THE_PROJECT_ROOT ${SignalX_DIR})
+  set(THE_PROJECT_ROOT ${SIGNALX_ROOT})
 endif()
 
 include(CMakerCommonUtil)  # include useful macros
