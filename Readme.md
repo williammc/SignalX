@@ -1,4 +1,4 @@
-SignalX (a modification of `Nano Signals Slots library`)
+SignalX (a modification of [Nano Signals Slots library](https://github.com/NoAvailableAlias/nano-signal-slot))
 ================
 
 C++11 Signals and Slots
