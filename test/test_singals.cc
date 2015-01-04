@@ -70,7 +70,7 @@ int main() {
   std::vector<bool> status;
 
   // Emit Signals and accumulate SRVs (signal return values)
-  signal1("signal 1 again", [&](bool srv) {
+  signal1("signal 1 again modified", [&](bool srv) {
     status.push_back(srv);
   });
 
@@ -93,6 +93,5 @@ int main() {
 
   signal4(f);
 
-  // Pause the screen
-  std::cin.get();
+  std::cin.get(); // Pause the screen
 }
