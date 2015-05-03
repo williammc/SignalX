@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/williammc/signalx.png?branch=master)](https://travis-ci.org/williammc/signalx)
+[![Build Status](https://travis-ci.org/williammc/SignalX.svg?branch=master)](https://travis-ci.org/williammc/SignalX)
 
 SignalX (a modification of [Nano Signals Slots library](https://github.com/NoAvailableAlias/nano-signal-slot))
 ================
