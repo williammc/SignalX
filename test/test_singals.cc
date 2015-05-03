@@ -93,5 +93,5 @@ int main() {
 
   signal4(f);
 
-  std::cin.get(); // Pause the screen
+  // std::cin.get(); // Pause the screen
 }

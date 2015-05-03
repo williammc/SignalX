@@ -1,0 +1,3 @@
+[submodule "external/cmaker"]
+	path = external/cmaker
+	url = git@github.com:williammc/cmaker.git

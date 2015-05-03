@@ -5,12 +5,7 @@ project(${THE_PROJECT_NAME})
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)  # for organizing code to folders
 
 # Look for our CMake modules paths
-find_path(CMAKER_ROOT NAMES cmake/CMakerCommonUtil.cmake
-                      PATHS $ENV{CMAKER_ROOT} ${CMAKE_CURRENT_SOURCE_DIR})
-
-if(NOT CMAKER_ROOT)
-  message(ERROR "Environment variable CMAKER_ROOT not set!")
-endif()
+set(CMAKER_ROOT external/cmaker)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKER_ROOT}/cmake
                               ${CMAKER_ROOT}/cmake/modules
