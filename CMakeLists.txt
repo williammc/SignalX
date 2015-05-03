@@ -7,13 +7,17 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)  # for organizing code to folders
 # Look for our CMake modules paths
 set(CMAKER_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/external/cmaker)
 
+if(NOT EXISTS "${CMAKER_ROOT}/cmake/CMakerCommonUtil.cmake")
+  message(FATAL "cmaker folder now exist")
+endif()
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKER_ROOT}/cmake
                               ${CMAKER_ROOT}/cmake/modules
                               ${CMAKE_CURRENT_SOURCE_DIR}/cmake
                               ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules
                               ${CMAKE_CURRENT_BINARY_DIR})
 
-set(SIGNALX_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(SIGNALX_ROOT ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 if(NOT THE_PROJECT_ROOT OR THE_PROJECT_ROOT STREQUAL "")
   set(THE_PROJECT_ROOT ${SIGNALX_ROOT})
 endif()
