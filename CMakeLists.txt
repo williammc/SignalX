@@ -6,7 +6,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)  # for organizing code to folders
 
 # Look for our CMake modules paths
 set(CMAKER_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/external/cmaker)
-
 if(NOT EXISTS "${CMAKER_ROOT}/cmake/CMakerCommonUtil.cmake")
   message(FATAL_ERROR "cmaker folder not exist")
 endif()

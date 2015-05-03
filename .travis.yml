@@ -6,18 +6,8 @@ compiler:
 # Setup different environments to test
 env:
   global:
-    - LIBSTDC_VERSION=4.9
+    - LIBSTDC_VERSION=4.8
     - CLANG_VERSION=3.5
-
-# # Handle git submodules yourself
-# git:
-#     submodules: false
-
-# # Use sed to replace the SSH URL with the public URL, then initialize submodules
-# before_install:
-#     # Replace <user> and <token> with your GitHub username and access token respectively
-#     - sed -i 's/git@github.com:/https:\/\/williammc:CM4MYiCv2R6MseDQ711j@github.com\//' .gitmodules
-#     - git submodule update --init --recursive
 
 # Setup repos etc before installation
 before_install:
