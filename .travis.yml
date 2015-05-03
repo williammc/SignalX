@@ -8,6 +8,16 @@ env:
   - CPP14=0
   - CPP14=1
 
+# Handle git submodules yourself
+git:
+    submodules: false
+
+# Use sed to replace the SSH URL with the public URL, then initialize submodules
+before_install:
+    # Replace <user> and <token> with your GitHub username and access token respectively
+    - sed -i 's/git@github.com:/https:\/\/williammc:CM4MYiCv2R6MseDQ711j@github.com\//' .gitmodules
+    - git submodule update --init --recursive
+
 # Setup repos etc before installation
 before_install:
   - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
