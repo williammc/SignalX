@@ -37,6 +37,9 @@ add_definitions(-DSIGNALX_ROOT="${SIGNALX_ROOT}")
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
   set(SignalX_CXX_FLAGS " -stdlib=libstdc++ ")  # prevent default libc++ on new mac
 endif()
+if(NOT WIN32)
+  set(SignalX_CXX_FLAGS " ${SignalX_CXX_FLAGS} -std=c++11 ")
+endif()
 
 set(CMAKE_CXX_FLAGS ${SignalX_CXX_FLAGS})
 cmaker_common_build_setting()

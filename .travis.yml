@@ -23,7 +23,8 @@ install:
   - sudo apt-get -qq install build-essential
   - sudo apt-get -qq --allow-unauthenticated install libstdc++-${LIBSTDC_VERSION}-dev
   - sudo apt-get -qq --allow-unauthenticated install clang-${CLANG_VERSION}
-
+  - if [ "$CXX" == "g++" ]; then CXX=g++-4.8; fi
+  - if [ "$CXX" == "clang++" ]; then CXX=clang++-3.5; fi
 # command to run tests
 script: 
   - clang++ --version
