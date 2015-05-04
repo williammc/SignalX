@@ -53,4 +53,5 @@ add_library(SignalX ${signalx_src})
 set_property(TARGET SignalX PROPERTY FOLDER "signalx_libs")
 set_property(TARGET SignalX PROPERTY LINKER_LANGUAGE CXX)
 
+enable_testing()
 add_subdirectory(test)
