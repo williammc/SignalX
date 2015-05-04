@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/williammc/SignalX.svg?branch=master)](https://travis-ci.org/williammc/SignalX)
+[![Build Status](https://travis-ci.org/williammc/SignalX.svg?branch=master)](https://travis-ci.org/williammc/SignalX) : GCC4.8, Clang3.5
 
 SignalX (a modification of [Nano Signals Slots library](https://github.com/NoAvailableAlias/nano-signal-slot))
 ================
