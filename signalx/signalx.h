@@ -77,6 +77,8 @@ class Signal<T_rv(Args...)> : public Observer {
 
   template <typename T>
   void remove_sfinae(const SlotKey& key, typename T::Observer* obj) {
+	  if (!obj || obj->tracked_connections_.empty())
+		  return;
     Observer::remove(key);
     obj->remove(key);
   }
